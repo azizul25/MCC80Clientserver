@@ -1,10 +1,10 @@
-﻿namespace API.Models;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class Accountrole
+namespace API.Models;
+
+public class AccountRole : BaseEntity
 {
-    public Guid Guid { get; set; }
-    public DateTime CreateDate { get; set; }
-    public DateTime ModifiedDate { get; set; }
+    
     public Guid AccountGuid { get; set; }
     public Guid RoleGuid { get; set; }
 }

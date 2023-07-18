@@ -2231,11 +2231,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\asp.net\\Clientserver\\API\\API.csproj",
+      "projectUniqueName": "D:\\asp.net\\MCC80Clientserver\\API\\API.csproj",
       "projectName": "API",
-      "projectPath": "D:\\asp.net\\Clientserver\\API\\API.csproj",
+      "projectPath": "D:\\asp.net\\MCC80Clientserver\\API\\API.csproj",
       "packagesPath": "C:\\Users\\azizu\\.nuget\\packages\\",
-      "outputPath": "D:\\asp.net\\Clientserver\\API\\obj\\",
+      "outputPath": "D:\\asp.net\\MCC80Clientserver\\API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\azizu\\AppData\\Roaming\\NuGet\\NuGet.Config",

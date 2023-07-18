@@ -1,12 +1,12 @@
-﻿namespace API.Models;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class Account
+namespace API.Models;
+
+public class Account : BaseEntity
 {
-    public Guid Guid { get; set; }
     public String Password { get; set; }
     public int Otp { get; set; }
-    public bool isused { get; set; }
+    public bool Isused { get; set; }
     public DateTime EcpiredTime { get; set; }
-    public DateTime CreateDate { get; set; }
-    public DateTime ModifiedDate { get; set; }
+
 }
