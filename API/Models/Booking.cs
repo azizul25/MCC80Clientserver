@@ -22,6 +22,6 @@ public class Booking : BaseEntity
 
     //carbilities
     //satu boking mempunyai satu ruangan dan employee
-    public Employee Employees { get; set; }
-    public Room Rooms { get; set; }
+    public Employee? Employees { get; set; }
+    public Room? Rooms { get; set; }
 }

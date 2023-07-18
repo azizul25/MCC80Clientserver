@@ -14,8 +14,8 @@ public class Account : BaseEntity
     public bool Isused { get; set; }
     [Column("ecpiredtime")]
     public DateTime EcpiredTime { get; set; }
-    //carnidiblities
+    //cardinilitas
     public ICollection<AccountRole> AccountRoles { get; set; }
-    public Employee Employees { get; set; }
+    public Employee? Employees { get; set; }
 
 }

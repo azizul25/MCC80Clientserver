@@ -26,5 +26,50 @@ public class BookingDbContext : DbContext
                 e.Email,
                 e.PhoneNumber
             }).IsUnique();
+
+        //many education with many universities
+        modelBuilder.Entity<Education>()
+            .HasOne(e => e.University)
+            .WithMany(u => u.Educations)
+            .HasForeignKey(u => u.UniversityGuid);
+
+        //
+        modelBuilder.Entity<Education>()
+            .HasOne(e => e.Employees)
+            .WithOne(em => em.Educations)
+            .HasForeignKey<Education>(em => em.Guid);
+
+
+        //many education with one universities
+        modelBuilder.Entity<Employee>()
+            .HasMany(e => e.Bookings)
+            .WithOne(b => b.Employees)
+            .HasForeignKey(b => b.EmployeeGuid);
+
+        //
+        modelBuilder.Entity<Account>()
+            .HasOne(a => a.Employees)
+            .WithOne(e => e.Accounts)
+            .HasForeignKey<Account>(a => a.Guid);
+        //
+        modelBuilder.Entity<Room>()
+            .HasMany(r => r.Bookings)
+            .WithOne(b => b.Rooms)
+            .HasForeignKey(b => b.RoomGuid);
+
+        //
+        modelBuilder.Entity<Account>()
+            .HasMany(a => a.AccountRoles)
+            .WithOne(ar => ar.Accounts)
+            .HasForeignKey(ar => ar.AccountGuid);
+        //
+        modelBuilder.Entity<Role>()
+            .HasMany(r => r.AccountRoles)
+            .WithOne(ar => ar.Roles)
+            .HasForeignKey(ar => ar.RoleGuid);
+
     }
+
+
+
 }
