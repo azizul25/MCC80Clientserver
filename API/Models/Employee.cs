@@ -10,7 +10,7 @@ public class Employee : BaseEntity
     public int Gender { get; set; }
     public DateTime HiringDate { get; set; }
     public String Email { get; set; }
-    public String Phonenumber { get; set; }
+    public String PhoneNumber { get; set; }
    
     
 }

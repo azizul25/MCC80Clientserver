@@ -15,4 +15,16 @@ public class BookingDbContext : DbContext
     public DbSet<Role> Roles { get; set; }
     public DbSet<Room> Rooms { get; set; }
     public DbSet<University> Universities { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<Employee>()
+            .HasIndex(e => new
+            {
+                e.Nik,
+                e.Email,
+                e.PhoneNumber
+            }).IsUnique();
+    }
 }
