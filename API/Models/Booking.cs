@@ -20,4 +20,8 @@ public class Booking : BaseEntity
     [Column("employeeguid")]
     public Guid EmployeeGuid { get; set; }
 
+    //carbilities
+    //satu boking mempunyai satu ruangan dan employee
+    public Employee Employees { get; set; }
+    public Room Rooms { get; set; }
 }

@@ -9,5 +9,6 @@ public class University : BaseEntity
     public String Code { get; set; }
     [Column("name", TypeName = "nvarchar(100)")]
     public String Name { get; set; }
-
+    //universitas punya banyak education
+    public ICollection<Education> Educations { get; set; }
 }

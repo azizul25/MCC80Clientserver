@@ -13,4 +13,10 @@ public class Education : BaseEntity
 
     [Column("universiyguid")]
     public Guid UniversityGuid { get; set; }
+
+    //educatoin cuma punya 1 employee dan univerity
+    //carnidilities
+    public Employee Employees { get; set; }
+    public University University { get; set; }
+
 }

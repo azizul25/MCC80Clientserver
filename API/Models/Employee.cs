@@ -22,6 +22,11 @@ public class Employee : BaseEntity
     public String Email { get; set; }
     [Column("phonenumber", TypeName = "nvarchar(20)")]
     public String PhoneNumber { get; set; }
-   
-    
+
+
+    //satu employee mempunyai banyak educati,akun,dan booking
+    public ICollection<Education> Educations { get; set; }
+    public ICollection<Account>  Accounts { get; set; }
+    public ICollection<Booking> Bookings { get; set; }
+
 }

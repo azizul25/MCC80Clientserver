@@ -11,5 +11,7 @@ public class Room : BaseEntity
     public int Floor { get; set; }
     [Column("capacity")]
     public int Capacity { get; set; }
+    //cardibilities
+    public ICollection<Booking> Bookings { get; set; }
 
 }
