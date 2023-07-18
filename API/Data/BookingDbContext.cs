@@ -9,7 +9,7 @@ public class BookingDbContext : DbContext
 
     public DbSet <Account> Accounts { get; set; }
     public DbSet<AccountRole> AccountRoles { get; set; }
-    public DbSet<Booking> Bokings { get; set; }
+    public DbSet<Booking> Bookings { get; set; }
     public DbSet<Education> Educations { get; set; }
     public DbSet<Employee> Employeeds { get; set; }
     public DbSet<Role> Roles { get; set; }
