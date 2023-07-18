@@ -1,6 +1,6 @@
 ﻿namespace API.Models;
 
-public class accountroles
+public class Accountrole
 {
     public Guid Guid { get; set; }
     public DateTime CreateDate { get; set; }

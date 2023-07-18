@@ -1,6 +1,6 @@
 ﻿namespace API.Models;
 
-public class trbooking
+public class Booking
 {
     public Guid Guid { get; set; }
     public DateTime StarDate { get; set; }

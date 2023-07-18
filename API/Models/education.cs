@@ -1,6 +1,6 @@
 ﻿namespace API.Models;
 
-public class education
+public class Education
 {
     public Guid Guid { get; set; }
     public String Major { get; set; }

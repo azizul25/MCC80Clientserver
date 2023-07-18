@@ -1,6 +1,6 @@
 ﻿namespace API.Models;
 
-public class rooms
+public class Room
 {
     public Guid Guid { get; set; }
     public String Name { get; set; }

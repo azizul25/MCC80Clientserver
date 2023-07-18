@@ -1,6 +1,6 @@
 ﻿namespace API.Models;
 
-public class employeed
+public class Employeed
 {
     public Guid Guid { get; set; }
     public String Nik { get; set; }

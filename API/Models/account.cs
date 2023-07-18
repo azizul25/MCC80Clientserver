@@ -1,6 +1,6 @@
 ﻿namespace API.Models;
 
-public class account
+public class Account
 {
     public Guid Guid { get; set; }
     public String Password { get; set; }
