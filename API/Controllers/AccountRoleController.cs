@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers;
 
 [ApiController]
-[Route("api/account-roles")]
+[Route("api/accountroles")]
 public class AccountRoleController : ControllerBase
 {
     private readonly IAccountRoleRepository _accountRoleRepository;
