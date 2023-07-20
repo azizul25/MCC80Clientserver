@@ -6,7 +6,7 @@ namespace API.Repositories;
 
 public class RoleRepository : IRoleRepository
 {
-    private readonly BookingDbContext _context;
+    private readonly BookingDbContext _context;    
 
     public RoleRepository(BookingDbContext context)
     {
