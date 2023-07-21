@@ -4,11 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
-[Route("api/educations")]
+
 [ApiController]
+[Route("api/educations")]
 public class EducationController : ControllerBase
 {
     private readonly IEducationRepository _educationRepository;
+
     public EducationController(IEducationRepository educationRepository)
     {
         _educationRepository = educationRepository;
@@ -18,14 +20,12 @@ public class EducationController : ControllerBase
     public IActionResult GetAll()
     {
         var result = _educationRepository.GetAll();
-        if (result is null)
+        if (!result.Any())
         {
             return NotFound();
         }
-        else
-        {
-            return Ok(result);
-        }
+
+        return Ok(result);
     }
 
     [HttpGet("{guid}")]
@@ -36,10 +36,8 @@ public class EducationController : ControllerBase
         {
             return NotFound();
         }
-        else
-        {
-            return Ok(result);
-        }
+
+        return Ok(result);
     }
 
     [HttpPost]
@@ -48,30 +46,28 @@ public class EducationController : ControllerBase
         var result = _educationRepository.Create(education);
         if (result is null)
         {
-            return StatusCode(500, "Error from database");
+            return StatusCode(500, "Error Retrieve from database");
         }
-        else
-        {
-            return Ok(result);
-        }
+
+        return Ok(result);
     }
 
     [HttpPut]
-    public IActionResult Update(Education Education)
+    public IActionResult Update(Education education)
     {
-        var check = _educationRepository.GetByGuid(Education.Guid);
+        var check = _educationRepository.GetByGuid(education.Guid);
         if (check is null)
         {
             return NotFound("Guid is not found");
         }
 
-        var result = _educationRepository.Update(Education);
+        var result = _educationRepository.Update(education);
         if (!result)
         {
             return StatusCode(500, "Error Retrieve from database");
         }
 
-        return Ok("Update succes");
+        return Ok("Update success");
     }
 
     [HttpDelete]
@@ -86,9 +82,9 @@ public class EducationController : ControllerBase
         var result = _educationRepository.Delete(data);
         if (!result)
         {
-            return StatusCode(500, "Error from database");
+            return StatusCode(500, "Error Retrieve from database");
         }
 
-        return Ok("Delete succes");
+        return Ok("Delete success");
     }
 }
