@@ -16,6 +16,18 @@ public class UniversityController : ControllerBase
         _universityRepository = universityRepository;
     }
 
+    [HttpGet("name/{name}")]
+    public IActionResult GetByName(string name)
+    {
+        var result = _universityRepository.GetByName(name);
+        if (!result.Any())
+        {
+            return NotFound();
+        }
+
+        return Ok(result);
+    }
+
     [HttpGet]
     public IActionResult GetAll()
     {
@@ -87,5 +99,4 @@ public class UniversityController : ControllerBase
 
         return Ok("Delete success");
     }
-
 }

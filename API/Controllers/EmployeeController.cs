@@ -4,11 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
-[Route("api/employees")]
 [ApiController]
+[Route("api/employees")]
 public class EmployeeController : ControllerBase
 {
     private readonly IEmployeeRepository _employeeRepository;
+
     public EmployeeController(IEmployeeRepository employeeRepository)
     {
         _employeeRepository = employeeRepository;
@@ -18,14 +19,12 @@ public class EmployeeController : ControllerBase
     public IActionResult GetAll()
     {
         var result = _employeeRepository.GetAll();
-        if (result is null)
+        if (!result.Any())
         {
             return NotFound();
         }
-        else
-        {
-            return Ok(result);
-        }
+
+        return Ok(result);
     }
 
     [HttpGet("{guid}")]
@@ -36,10 +35,8 @@ public class EmployeeController : ControllerBase
         {
             return NotFound();
         }
-        else
-        {
-            return Ok(result);
-        }
+
+        return Ok(result);
     }
 
     [HttpPost]
@@ -48,12 +45,10 @@ public class EmployeeController : ControllerBase
         var result = _employeeRepository.Create(employee);
         if (result is null)
         {
-            return StatusCode(500, "Error from database");
+            return StatusCode(500, "Error Retrieve from database");
         }
-        else
-        {
-            return Ok(result);
-        }
+
+        return Ok(result);
     }
 
     [HttpPut]
@@ -71,7 +66,7 @@ public class EmployeeController : ControllerBase
             return StatusCode(500, "Error Retrieve from database");
         }
 
-        return Ok("Update succes");
+        return Ok("Update success");
     }
 
     [HttpDelete]
@@ -86,9 +81,9 @@ public class EmployeeController : ControllerBase
         var result = _employeeRepository.Delete(data);
         if (!result)
         {
-            return StatusCode(500, "Error from database");
+            return StatusCode(500, "Error Retrieve from database");
         }
 
-        return Ok("Delete succes");
+        return Ok("Delete success");
     }
 }
