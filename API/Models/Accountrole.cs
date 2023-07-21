@@ -9,6 +9,7 @@ public class AccountRole : BaseEntity
     public Guid AccountGuid { get; set; }
     [Column("roleguid")]
     public Guid RoleGuid { get; set; }
+
     //carnidilities
     public Account? Accounts { get; set; }
     public Role? Roles { get; set; }

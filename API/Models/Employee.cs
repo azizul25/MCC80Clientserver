@@ -27,6 +27,6 @@ public class Employee : BaseEntity
     //cardinall
     public Education? Educations { get; set; }
     public Account?  Accounts { get; set; }
-    public ICollection<Booking> Bookings { get; set; }
+    public ICollection<Booking>? Bookings { get; set; }
 
 }

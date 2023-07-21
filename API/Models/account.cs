@@ -15,7 +15,7 @@ public class Account : BaseEntity
     [Column("ecpiredtime")]
     public DateTime EcpiredTime { get; set; }
     //cardinilitas
-    public ICollection<AccountRole> AccountRoles { get; set; }
+    public ICollection<AccountRole>? AccountRoles { get; set; }
     public Employee? Employees { get; set; }
 
 }
