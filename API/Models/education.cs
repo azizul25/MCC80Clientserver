@@ -9,7 +9,7 @@ public class Education : BaseEntity
     [Column("degree", TypeName = "nvarchar(100)")]
     public String Degree { get; set; }
     [Column("gpa")]
-    public double GPA { get; set; }
+    public float GPA { get; set; }
 
     [Column("universiyguid")]
     public Guid UniversityGuid { get; set; }
