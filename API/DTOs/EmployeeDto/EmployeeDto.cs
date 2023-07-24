@@ -15,7 +15,7 @@ public class EmployeeDto
     public GenderLevel Gender { get; set; }
     public DateTime Hiringdate { get; set; }
     public string Email { get; set; }
-    public string Phone { get; set; }
+    public string PhoneNumber { get; set; }
 
     public static implicit operator Employee(EmployeeDto employeeDto)
     {
@@ -28,7 +28,7 @@ public class EmployeeDto
             BirthDate = employeeDto.Birtdate,
             Gender = employeeDto.Gender,
             Email = employeeDto.Email,
-            PhoneNumber = employeeDto.Phone,
+            PhoneNumber = employeeDto.PhoneNumber,
             ModifiedDate = DateTime.Now
         };
     }
@@ -44,7 +44,7 @@ public class EmployeeDto
             Birtdate = employee.BirthDate,
             Gender = employee.Gender,
             Email = employee.Email,
-            Phone = employee.PhoneNumber
+            PhoneNumber = employee.PhoneNumber
         };
     }
 }

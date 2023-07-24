@@ -14,4 +14,12 @@ public class UniversityRepository : GeneralRepository<University>, IUniversityRe
                        .Where(university => university.Name.Contains(name))
                        .ToList();
     }
+
+    public bool IsNotExist(String value)
+    {
+        return _context.Set<University>()
+            .SingleOrDefault(u => u.Name.Contains(value) ||
+             u.Code.Contains(value)) is null;
+
+    }
 }

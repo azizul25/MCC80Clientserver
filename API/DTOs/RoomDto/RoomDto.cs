@@ -21,7 +21,7 @@ public class RoomDto
             ModifiedDate = DateTime.Now
         };
     }
-
+    //cuma alternatif pilih salah satu saja antara implicit /explicit
     public static explicit operator RoomDto(Room room)
     {
         return new RoomDto

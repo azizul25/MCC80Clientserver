@@ -7,7 +7,7 @@ public class NewEducationDto
     public Guid Guid { get; set; }
     public string Major { get; set; }
     public string Degree { get; set; }
-    public float GPA { get; set; }
+    public double GPA { get; set; }
     public Guid UniversityGuid { get; set; }
 
     public static implicit operator Education(NewEducationDto newEducationDto)

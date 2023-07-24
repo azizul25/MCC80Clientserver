@@ -4,5 +4,5 @@ namespace API.Contracts;
 
 public interface IAccountRepository : IGeneralRepository<Account>
 {
-
+    bool IsNotExist(String value);
 }

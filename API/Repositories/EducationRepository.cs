@@ -6,4 +6,5 @@ namespace API.Repositories;
 public class EducationRepository : GeneralRepository<Education>, IEducationRepository
 {
     public EducationRepository(BookingDbContext context) : base(context) { }
+
 }
