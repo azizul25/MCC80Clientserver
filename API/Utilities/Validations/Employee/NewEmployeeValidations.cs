@@ -1,15 +1,14 @@
 ﻿using API.Contracts;
 using API.DTOs.EmployeeDto;
-using API.Repositories;
 using FluentValidation;
 
 namespace API.Utilities.Validations.Employee;
 
-public class NewEmployeeValidations : AbstractValidator<NewEmployeeDto>
+public class NewRoomValidations : AbstractValidator<NewEmployeeDto>
 {
     private readonly IEmployeeRepository _employeerepository;
 
-    public NewEmployeeValidations(IEmployeeRepository employeeRepository)
+    public NewRoomValidations(IEmployeeRepository employeeRepository)
     {
         _employeerepository = employeeRepository;   
 
