@@ -1,10 +1,11 @@
 ﻿using API.Contracts;
+using API.DTOs.EmployeeDto;
 using FluentValidation;
-using API.DTOs.Employees;
+
 
 namespace API.Utilities.Validations.Employees;
 
-public class EmployeeValidator : AbstractValidator<UpdateEmployeeNikDto>
+public class EmployeeValidator : AbstractValidator<EmployeeDto>
 {
     private readonly IEmployeeRepository _employeeRepository;
     public EmployeeValidator(IEmployeeRepository employeeRepository)
@@ -27,7 +28,7 @@ public class EmployeeValidator : AbstractValidator<UpdateEmployeeNikDto>
 
         RuleFor(e => e.Hiringdate).NotEmpty();
 
-        RuleFor(e => e.Phone)
+        RuleFor(e => e.PhoneNumber)
             .NotEmpty()
             .MaximumLength(20)
             .Matches("^(^\\+62|62|^08)(\\d{3,4}-?){2}\\d{3,4}$")
