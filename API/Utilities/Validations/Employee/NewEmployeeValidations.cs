@@ -12,9 +12,7 @@ public class NewRoomValidations : AbstractValidator<NewEmployeeDto>
     {
         _employeerepository = employeeRepository;   
 
-        RuleFor(e => e.Nik)
-            .NotEmpty()
-            .MaximumLength(6);
+ 
         RuleFor(e => e.FirstName)
             .NotEmpty();
         RuleFor(e => e.BirthDate)
