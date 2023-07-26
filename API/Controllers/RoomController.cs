@@ -1,4 +1,5 @@
-﻿using API.DTOs.RoomDto;
+﻿using API.DTOs.EmployeeDto;
+using API.DTOs.RoomDto;
 using API.Services;
 using API.Utilities.Handlers;
 using Microsoft.AspNetCore.Mvc;
@@ -156,6 +157,76 @@ public class RoomController : ControllerBase
             Code = StatusCodes.Status200OK,
             Status = HttpStatusCode.OK.ToString(),
             Message = "Delete success",
+            Data = result
+        });
+    }
+
+    [HttpGet("booked-room-today")]
+    public IActionResult GetBookedRoomToday()
+    {
+        var result = _roomService.GetAllBookedRoomToday();
+        if (result is null)
+        {
+            return NotFound(new ResponseHandler<BookedRoomDTO>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "guid not found"
+            });
+        }
+
+        return Ok(new ResponseHandler<IEnumerable<BookedRoomDTO>>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Success retrieve data",
+            Data = result
+        });
+    }
+
+    //
+    [HttpGet("booked-detail")]
+    public IActionResult GetAllBookedRoomDetail()
+    {
+        var result = _roomService.GetAllBookedRoomDetail();
+        if (!result.Any())
+        {
+            return NotFound(new ResponseHandler<BookedRoomDTO>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "data not found"
+            });
+        }
+
+        return Ok(new ResponseHandler<IEnumerable<BookedRoomDTO>>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Success retrieve data",
+            Data = result
+        });
+    }
+    //
+    [HttpGet("booked-detail/{guid}")]
+    public IActionResult GetBookedDetailByGuid(Guid guid)
+    {
+        var result = _roomService.GetBookedDetailByGuid(guid);
+        if (result is null)
+        {
+            return NotFound(new ResponseHandler<BookedRoomDTO>
+            {
+                Code = StatusCodes.Status404NotFound,
+                Status = HttpStatusCode.NotFound.ToString(),
+                Message = "guid not found"
+            });
+        }
+
+        return Ok(new ResponseHandler<BookedRoomDTO>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Success retrieve data",
             Data = result
         });
     }

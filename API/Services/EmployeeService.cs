@@ -91,7 +91,71 @@ public class EmployeeService
             : 0; // Employee failed to delete;
     }
 
+    public IEnumerable<EmployeeDetailDTO> GetAllEmployeeDetail()
+    {
+        var employees = _employeeRepository.GetAll();
 
+        if (!employees.Any())
+        {
+            return Enumerable.Empty<EmployeeDetailDTO>();
+        }
+
+        var employeesDetailDto = new List<EmployeeDetailDTO>();
+
+        foreach (var e in employees)
+        {
+            var education = _educationRepository.GetByGuid(e.Guid);
+            var university = _universityRepository.GetByGuid(education.UniversityGuid);
+
+            EmployeeDetailDTO employeeDetail = new EmployeeDetailDTO
+            {
+                EmployeeGuid = e.Guid,
+                NIK = e.Nik,
+                FullName = e.FirstName + " " + e.LastName,
+                BirthDate = e.BirthDate,
+                Gender = e.Gender,
+                HiringDate = e.HiringDate,
+                Email = e.Email,
+                PhoneNumber = e.PhoneNumber,
+                Major = education.Major,
+                Degree = education.Degree,
+                GPA = education.GPA,
+                UniversityName = university.Name
+            };
+
+            employeesDetailDto.Add(employeeDetail);
+        };
+
+        return employeesDetailDto; // employeeDetail is found;
+    }
+
+    public EmployeeDetailDTO? GetEmployeeDetailByGuid(Guid guid)
+    {
+        var employee = _employeeRepository.GetByGuid(guid);
+
+        if (employee is null)
+        {
+            return null;
+        }
+        var education = _educationRepository.GetByGuid(employee.Guid);
+        var university = _universityRepository.GetByGuid(education.UniversityGuid);
+
+        return new EmployeeDetailDTO
+        {
+            EmployeeGuid = employee.Guid,
+            NIK = employee.Nik,
+            FullName = employee.FirstName + " " + employee.LastName,
+            BirthDate = employee.BirthDate,
+            Gender = employee.Gender,
+            HiringDate = employee.HiringDate,
+            Email = employee.Email,
+            PhoneNumber = employee.PhoneNumber,
+            Major = education.Major,
+            Degree = education.Degree,
+            GPA = education.GPA,
+            UniversityName = university.Name
+        }; ; // employeeDetail is found;
 
 
     }
+}

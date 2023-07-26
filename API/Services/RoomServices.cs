@@ -1,16 +1,22 @@
 ﻿using API.Contracts;
+using API.DTOs.EmployeeDto;
 using API.DTOs.RoomDto;
 using API.Models;
+using API.Repositories;
 
 namespace API.Services;
 
 public class RoomService
 {
     private readonly IRoomRepository _roomRepository;
+    private readonly IBookingRepository _bookingRepository;
+    private readonly IEmployeeRepository _employeeRepository;
 
-    public RoomService(IRoomRepository roomRepository)
+    public RoomService(IRoomRepository roomRepository, IBookingRepository bookingRepository, IEmployeeRepository employeeRepository)
     {
         _roomRepository = roomRepository;
+        _bookingRepository = bookingRepository;
+        _employeeRepository = employeeRepository;
     }
 
     public IEnumerable<RoomDto> GetAll()
@@ -80,5 +86,93 @@ public class RoomService
 
         return result ? 1 // Room is deleted;
             : 0; // Room failed to delete;
+    }
+
+    public IEnumerable<BookedRoomDTO> GetAllBookedRoomToday()
+    {
+        var today = DateTime.Today.ToString("dd-MM-yyyy");
+        var bookings = _bookingRepository.GetAll()
+                        .Where(b => b.StarDate.ToString("dd-MM-yyyy").Equals(today));
+
+        if (!bookings.Any())
+        {
+            return Enumerable.Empty<BookedRoomDTO>();
+        }
+
+        var bookedRoomTodayDtos = new List<BookedRoomDTO>();
+
+        foreach (var booking in bookings)
+        {
+            var employee = _employeeRepository.GetByGuid(booking.EmployeeGuid);
+            var room = _roomRepository.GetByGuid(booking.RoomGuid);
+
+            BookedRoomDTO bookedRoom = new BookedRoomDTO
+            {
+                BookingGuid = booking.Guid,
+                RoomName = room.Name,
+                Status = booking.Status,
+                Floor = room.Floor,
+                BookedBy = employee.FirstName + " " + employee.LastName
+            };
+            bookedRoomTodayDtos.Add(bookedRoom);
+        }
+
+        return bookedRoomTodayDtos; // room is found;
+    }
+    //
+
+    public IEnumerable<BookedRoomDTO> GetAllBookedRoomDetail()
+    {
+ 
+        var bookings = _bookingRepository.GetAll();
+      
+
+        if (!bookings.Any())
+        {
+            return Enumerable.Empty<BookedRoomDTO>();
+        }
+
+        var bookedRoomTodayDtos = new List<BookedRoomDTO>();
+
+        foreach (var booking in bookings)
+        {
+            var employee = _employeeRepository.GetByGuid(booking.EmployeeGuid);
+            var room = _roomRepository.GetByGuid(booking.RoomGuid);
+
+            BookedRoomDTO bookedRoom = new BookedRoomDTO
+            {
+                BookingGuid = booking.Guid,
+                RoomName = room.Name,
+                Status = booking.Status,
+                Floor = room.Floor,
+                BookedBy = employee.FirstName + " " + employee.LastName
+            };
+            bookedRoomTodayDtos.Add(bookedRoom);
+        }
+
+        return bookedRoomTodayDtos; // room is found;
+    }
+    //
+    public BookedRoomDTO? GetBookedDetailByGuid(Guid guid)
+    {
+        var bookings = _bookingRepository.GetByGuid(guid);
+
+        if (bookings is null)
+        {
+            return null;
+        }
+        var employee = _employeeRepository.GetByGuid(bookings.EmployeeGuid);
+        var room = _roomRepository.GetByGuid(bookings.RoomGuid);
+
+        return new BookedRoomDTO
+        {
+            BookingGuid = bookings.Guid,
+            RoomName = room.Name,
+            Status = bookings.Status,
+            Floor = room.Floor,
+            BookedBy = employee.FirstName + " " + employee.LastName
+        }; ; // employeeDetail is found;
+
+
     }
 }
