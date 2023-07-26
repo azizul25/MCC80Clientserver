@@ -1,19 +1,78 @@
 ﻿using API.Contracts;
 using API.DTOs.AccountDto;
 using API.DTOs.Accounts;
+using API.DTOs.EducationDto;
+using API.DTOs.EmployeeDto;
+using API.DTOs.UniversityDto;
 using API.Models;
+using API.Repositories;
+using API.Utilities.Handler;
+
 namespace API.Services;
 
 public class AccountService
 {
     private readonly IAccountRepository _accountRepository;
     private readonly IEmployeeRepository _employeeRepository;
+    private readonly IEducationRepository _educationRepository;
+    private readonly IUniversityRepository _universityRepository;
 
-    public AccountService(IAccountRepository accountRepository, IEmployeeRepository employeeRepository)
+    public AccountService(IAccountRepository accountRepository, IEmployeeRepository employeeRepository, IEducationRepository educationRepository,
+        IUniversityRepository universityRepository)
     {
         _accountRepository = accountRepository;
         _employeeRepository = employeeRepository;
+        _educationRepository = educationRepository;
+        _universityRepository = universityRepository;
     }
+
+    public int Register(RegisterDto registerDto)
+    {
+        try
+        {
+            var account = new Account
+            {
+                Password = registerDto.Password
+            };
+            var employee = new Employee
+            {
+                Guid = new Guid(),
+                FirstName = registerDto.FirstName,
+                LastName = registerDto.LastName,
+                Email = registerDto.Email,
+                PhoneNumber = registerDto.PhoneNumber,
+                BirthDate = registerDto.BirthDate,
+                HiringDate = registerDto.HiringDate,
+                Gender = registerDto.Gender,
+            };
+            var university = new University
+            {
+                Name = registerDto.UniversityName
+            };
+            var education = new Education
+            {
+                Degree = registerDto.Degree,
+                Major = registerDto.Major,
+                GPA = registerDto.GPA
+            };
+            employee.Accounts = account;
+            education.University = university;
+            education.Employees = employee;
+
+            var createemployee = _employeeRepository.Create(employee);
+            var createuniversity = _universityRepository.Create(university);
+            var createeducation = _educationRepository.Create(education);
+            var createaccount = _accountRepository.Create(account);
+
+            return 1;
+        }
+        catch
+        {
+            return 0;
+        }
+
+    }
+
     public int Login(LoginDto loginDto)
     {
         var getEmployee = _employeeRepository.GetByEmail(loginDto.Email);
@@ -61,7 +120,7 @@ public class AccountService
         return (AccountDto)account; // Account is found;
     }
 
-    public AccountDto? Create(NewAccountDto newAccountDto)
+    public AccountDto? Create(NewEmpolyeeNikDto newAccountDto)
     {
         var account = _accountRepository.Create(newAccountDto);
         if (account is null)
@@ -101,4 +160,5 @@ public class AccountService
         return result ? 1 // Account is deleted;
             : 0; // Account failed to delete;
     }
+
 }

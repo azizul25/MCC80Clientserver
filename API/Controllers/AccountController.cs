@@ -18,6 +18,33 @@ public class AccountController : ControllerBase
         _accountService = accountService;
     }
 
+   
+    [HttpPost("register")]
+    public IActionResult Register(RegisterDto registerDto)
+    {
+        var result = _accountService.Register(registerDto);
+
+        if (result is 0)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, new ResponseHandler<AccountDto>
+            {
+                Code = StatusCodes.Status500InternalServerError,
+                Status = HttpStatusCode.InternalServerError.ToString(),
+                Message = "Error occurred when registering"
+            });
+        }
+
+        return Ok(new ResponseHandler<RegisterDto>
+        {
+            Code = StatusCodes.Status200OK,
+            Status = HttpStatusCode.OK.ToString(),
+            Message = "Register Success",
+
+        });
+
+    }
+
+
     [HttpPost("login")]
     public IActionResult Login(LoginDto loginDto)
     {
@@ -90,7 +117,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Insert(NewAccountDto newAccountDto)
+    public IActionResult Insert(NewEmpolyeeNikDto newAccountDto)
     {
         var result = _accountService.Create(newAccountDto);
         if (result is null)

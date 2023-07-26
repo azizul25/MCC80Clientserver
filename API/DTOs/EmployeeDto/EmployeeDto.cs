@@ -10,7 +10,7 @@ public class EmployeeDto
     public Guid Guid { get; set; }
     public string Nik { get; set; }
     public string Firstname { get; set; }
-    public string Lastname { get; set; }
+    public string? Lastname { get; set; }
     public DateTime Birtdate { get; set; }
     public GenderLevel Gender { get; set; }
     public DateTime Hiringdate { get; set; }

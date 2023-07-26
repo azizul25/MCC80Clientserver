@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace API.Utilities.Validations.account;
 
-public class NewAccountValidations : AbstractValidator<NewAccountDto>
+public class NewAccountValidations : AbstractValidator<NewEmpolyeeNikDto>
 {
     private readonly IAccountRepository _accountrepository;
 
