@@ -1,6 +1,7 @@
 ﻿using API.Contracts;
 using API.DTOs.EmployeeDto;
 using API.Models;
+using API.Repositories;
 using API.Utilities.Handler;
 
 namespace API.Services;
@@ -8,10 +9,14 @@ namespace API.Services;
 public class EmployeeService
 {
     private readonly IEmployeeRepository _employeeRepository;
+    private readonly IEducationRepository _educationRepository;
+    private readonly IUniversityRepository _universityRepository;
 
-    public EmployeeService(IEmployeeRepository employeeRepository)
+    public EmployeeService(IEmployeeRepository employeeRepository, IEducationRepository educationRepository, IUniversityRepository universityRepository)
     {
         _employeeRepository = employeeRepository;
+        _educationRepository = educationRepository;
+        _universityRepository = universityRepository;
     }
 
     public IEnumerable<EmployeeDto> GetAll()
@@ -85,4 +90,8 @@ public class EmployeeService
         return result ? 1 // Employee is deleted;
             : 0; // Employee failed to delete;
     }
-}
+
+
+
+
+    }

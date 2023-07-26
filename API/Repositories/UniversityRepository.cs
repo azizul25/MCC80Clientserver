@@ -20,6 +20,10 @@ public class UniversityRepository : GeneralRepository<University>, IUniversityRe
         return _context.Set<University>()
             .SingleOrDefault(u => u.Name.Contains(value) ||
              u.Code.Contains(value)) is null;
+    }
 
+    public Guid GetLastUniversityGuid()
+    {
+        return _context.Set<University>().ToList().LastOrDefault().Guid;
     }
 }

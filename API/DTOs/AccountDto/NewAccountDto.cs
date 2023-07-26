@@ -2,7 +2,7 @@
 
 namespace API.DTOs.AccountDto;
 
-public class NewEmpolyeeNikDto
+public class NewAccountDto
 {
     public Guid Guid { get; set; }
     public string Password { get; set; }
@@ -10,7 +10,7 @@ public class NewEmpolyeeNikDto
     public bool Isused { get; set; }
     public DateTime EcpiredTime { get; set; }
 
-    public static implicit operator Account(NewEmpolyeeNikDto newAccountDto)
+    public static implicit operator Account(NewAccountDto newAccountDto)
     {
         return new Account
         {
@@ -18,15 +18,15 @@ public class NewEmpolyeeNikDto
             Password = newAccountDto.Password,
             Otp = newAccountDto.Otp,
             Isused = newAccountDto.Isused,
-            EcpiredTime = DateTime.Now,
+            EcpiredTime = newAccountDto.EcpiredTime,
             CreatedDate = DateTime.Now,
             ModifiedDate = DateTime.Now
         };
     }
-
-    public static explicit operator NewEmpolyeeNikDto(Account account)
+     
+    public static explicit operator NewAccountDto(Account account)
     {
-        return new NewEmpolyeeNikDto
+        return new NewAccountDto
         {
             Guid = account.Guid,
             Password = account.Password,

@@ -24,7 +24,7 @@ public class AccountController : ControllerBase
     {
         var result = _accountService.Register(registerDto);
 
-        if (result is 0)
+        if (result is null)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, new ResponseHandler<AccountDto>
             {
@@ -43,6 +43,8 @@ public class AccountController : ControllerBase
         });
 
     }
+
+
 
 
     [HttpPost("login")]
@@ -117,7 +119,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Insert(NewEmpolyeeNikDto newAccountDto)
+    public IActionResult Insert(NewAccountDto newAccountDto)
     {
         var result = _accountService.Create(newAccountDto);
         if (result is null)

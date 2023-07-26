@@ -17,12 +17,12 @@ namespace API.DTOs.EmployeeDto
         {
             return new Employee
             {
-                Guid = new Guid(),
+                Guid= Guid.NewGuid(),
                 FirstName = newEmployeeDto.FirstName,
                 LastName = newEmployeeDto.LastName,
-                BirthDate = DateTime.Now,
+                BirthDate = newEmployeeDto.BirthDate,
                 Gender = newEmployeeDto.Gender,
-                HiringDate = DateTime.Now,
+                HiringDate = newEmployeeDto.HiringDate,
                 Email = newEmployeeDto.Email,
                 PhoneNumber = newEmployeeDto.PhoneNumber,
                 CreatedDate = DateTime.Now,
@@ -37,9 +37,9 @@ namespace API.DTOs.EmployeeDto
                 
                 FirstName = employee.FirstName,
                 LastName = employee.LastName,
-                BirthDate = DateTime.Now,
+                BirthDate = employee.BirthDate,
                 Gender = employee.Gender,
-                HiringDate = DateTime.Now,
+                HiringDate = employee.HiringDate,
                 Email = employee.Email,
                 PhoneNumber = employee.PhoneNumber
             };

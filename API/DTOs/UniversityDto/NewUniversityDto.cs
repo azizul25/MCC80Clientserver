@@ -11,7 +11,7 @@ public class NewUniversityDto
     {
         return new University
         {
-            Guid = new Guid(),
+            Guid = Guid.NewGuid(),
             Code = newUniversityDto.Code,
             Name = newUniversityDto.Name,
             CreatedDate = DateTime.Now,
