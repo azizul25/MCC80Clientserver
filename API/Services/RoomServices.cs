@@ -155,24 +155,21 @@ public class RoomService
     //
     public BookedRoomDTO? GetBookedDetailByGuid(Guid guid)
     {
-        var bookings = _bookingRepository.GetByGuid(guid);
-
-        if (bookings is null)
+        var today = DateTime.Today.ToString("dd-MM-yyyy");
+        var bookeeds = (from booking in _bookingRepository.GetAll()
+                        join employee in _employeeRepository.GetAll() on booking.EmployeeGuid equals employee.Guid
+                        join room in _roomRepository.GetAll() on booking.RoomGuid equals room.Guid
+                        where booking.StarDate.ToString("dd-MM-yyyy") == today
+                        select new BookedRoomDTO
         {
-            return null;
-        }
-        var employee = _employeeRepository.GetByGuid(bookings.EmployeeGuid);
-        var room = _roomRepository.GetByGuid(bookings.RoomGuid);
-
-        return new BookedRoomDTO
-        {
-            BookingGuid = bookings.Guid,
+            BookingGuid = booking.Guid,
             RoomName = room.Name,
-            Status = bookings.Status,
+            Status = booking.Status,
             Floor = room.Floor,
             BookedBy = employee.FirstName + " " + employee.LastName
-        }; ; // employeeDetail is found;
+        }); // employeeDetail is found;
 
-
+     
+        return (BookedRoomDTO?)bookeeds; // room is found;
     }
 }

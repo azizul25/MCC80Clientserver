@@ -93,22 +93,11 @@ public class EmployeeService
 
     public IEnumerable<EmployeeDetailDTO> GetAllEmployeeDetail()
     {
-        var employees = _employeeRepository.GetAll();
-
-        if (!employees.Any())
-        {
-            return Enumerable.Empty<EmployeeDetailDTO>();
-        }
-
-        var employeesDetailDto = new List<EmployeeDetailDTO>();
-
-        foreach (var e in employees)
-        {
-            var education = _educationRepository.GetByGuid(e.Guid);
-            var university = _universityRepository.GetByGuid(education.UniversityGuid);
-
-            EmployeeDetailDTO employeeDetail = new EmployeeDetailDTO
-            {
+        var employeesDetailDto = from e in _employeeRepository.GetAll()
+                              join education in _educationRepository.GetAll() on e.Guid equals education.Guid
+                              join university in _universityRepository.GetAll() on education.UniversityGuid equals university.Guid
+                              select new EmployeeDetailDTO
+                              {
                 EmployeeGuid = e.Guid,
                 NIK = e.Nik,
                 FullName = e.FirstName + " " + e.LastName,
@@ -123,38 +112,12 @@ public class EmployeeService
                 UniversityName = university.Name
             };
 
-            employeesDetailDto.Add(employeeDetail);
-        };
-
         return employeesDetailDto; // employeeDetail is found;
     }
 
     public EmployeeDetailDTO? GetEmployeeDetailByGuid(Guid guid)
     {
-        var employee = _employeeRepository.GetByGuid(guid);
-
-        if (employee is null)
-        {
-            return null;
-        }
-        var education = _educationRepository.GetByGuid(employee.Guid);
-        var university = _universityRepository.GetByGuid(education.UniversityGuid);
-
-        return new EmployeeDetailDTO
-        {
-            EmployeeGuid = employee.Guid,
-            NIK = employee.Nik,
-            FullName = employee.FirstName + " " + employee.LastName,
-            BirthDate = employee.BirthDate,
-            Gender = employee.Gender,
-            HiringDate = employee.HiringDate,
-            Email = employee.Email,
-            PhoneNumber = employee.PhoneNumber,
-            Major = education.Major,
-            Degree = education.Degree,
-            GPA = education.GPA,
-            UniversityName = university.Name
-        }; ; // employeeDetail is found;
+        return GetAllEmployeeDetail().SingleOrDefault(e => e.EmployeeGuid == guid); // employeeDetail is found;
 
 
     }
