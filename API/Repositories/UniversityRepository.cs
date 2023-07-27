@@ -26,4 +26,10 @@ public class UniversityRepository : GeneralRepository<University>, IUniversityRe
     {
         return _context.Set<University>().ToList().LastOrDefault().Guid;
     }
+
+    public University? GetByCode(string code)
+    {
+        return _context.Set<University>().SingleOrDefault(u => u.Code == code);
+    }
+
 }
