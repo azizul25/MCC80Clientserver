@@ -163,4 +163,85 @@ public class AccountService
             : 0; // Account failed to delete;
     }
 
+    //
+    public int ForgotPassword(ForgotPasswordDto forgotPasswordDto)
+    {
+        var otp = new Random().Next(111111, 999999);
+        var getAccountDetail = (from e in _employeeRepository.GetAll()
+                                join a in _accountRepository.GetAll() on e.Guid equals a.Guid
+                                where e.Email == forgotPasswordDto.Email
+                                select a).FirstOrDefault();
+
+        if (getAccountDetail is null)
+        {
+            return 0; // no email found
+        }
+
+
+        var isUpdated = _accountRepository.Update(new Account
+        {
+            Guid = getAccountDetail.Guid,
+            Password = getAccountDetail.Password,
+            EcpiredTime = DateTime.Now.AddMinutes(5),
+            Otp = otp,
+            Isused = false,
+            CreatedDate = getAccountDetail.CreatedDate,
+            ModifiedDate = getAccountDetail.ModifiedDate
+        });
+
+        if (!isUpdated)
+        {
+            return -1; // error update
+        }
+
+        return 1;
+    }
+
+    public int ChangePassword(ChangePasswordDto changePasswordDto)
+    {
+        var getAccount = (from e in _employeeRepository.GetAll()
+                          join a in _accountRepository.GetAll() on e.Guid equals a.Guid
+                          where e.Email == changePasswordDto.Email
+                          select a).FirstOrDefault();
+
+        if (getAccount is null)
+        {
+            return 0;
+        }
+
+        var account = new Account
+        {
+            Guid = getAccount.Guid,
+            Isused = true,
+            ModifiedDate = DateTime.Now,
+            CreatedDate = getAccount.CreatedDate,
+            Otp = getAccount.Otp,
+            EcpiredTime = getAccount.EcpiredTime,
+            Password = HashHandler.GenerateHash(changePasswordDto.Password),
+        };
+
+        if (getAccount.Otp != changePasswordDto.Otp)
+        {
+            return -1;
+        }
+
+        if (getAccount.Isused == true)
+        {
+            return -2;
+        }
+
+        if (getAccount.EcpiredTime < DateTime.Now)
+        {
+            return -3; // OTP expired
+        }
+
+
+        var isUpdated = _accountRepository.Update(account);
+        if (!isUpdated)
+        {
+            return -4; //Account not Update
+        }
+
+        return 3;
+    }
 }
